@@ -24,7 +24,7 @@
 ## 使用教程  
 #### 1. 网页扫码登录
 #### 2. 填写config.ini配置信息 
-(1)eid,和fp找个普通商品随便下单,然后抓包就能看到,这两个值可以填固定的 
+(1)eid,和fp找个普通商品随便下单,在结算页面打开控制台,然后切换到「控制台Console」，在下面的 \> 后面输入 _JdTdudfp（注意不是那个Filter方框）,这两个值可以填固定的 
 > 不会的话参考原作者的issue https://github.com/zhou-xiaojun/jd_mask/issues/22
 
 (2)cookies_string,sku_id,DEFAULT_USER_AGENT(和cookie获取同一个地方就会看到.直接复制进去就可以了) 
@@ -36,4 +36,5 @@
 以上都是必填的.
 
 #### 3.运行main.py 
-根据提示选择相应功能即可
+1 先预约抢购
+2 再开始抢购

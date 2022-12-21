@@ -4,7 +4,7 @@ import time
 from jd_logger import logger
 from timer import Timer
 import requests
-from util import parse_json, get_session, get_sku_title,send_wechat
+from util import parse_json, get_session, get_sku_title, send_wechat
 from config import global_config
 from concurrent.futures import ProcessPoolExecutor
 
@@ -169,7 +169,9 @@ class JdSeckill(object):
         }
         while True:
             resp = self.session.get(url=url, headers=headers, params=payload)
-            resp_json = parse_json(resp.text)
+            resp_text = resp.text
+            resp_json = parse_json(resp_text)
+            print(f"抢购链接的返回信息为: {resp_text}")
             if resp_json.get('url'):
                 # https://divide.jd.com/user_routing?skuId=8654289&sn=c3f4ececd8461f0e4d7267e96a91e0e0&from=pc
                 router_url = 'https:' + resp_json.get('url')
@@ -318,10 +320,11 @@ class JdSeckill(object):
             total_money = resp_json.get('totalMoney')
             pay_url = 'https:' + resp_json.get('pcUrl')
             logger.info(
-                '抢购成功，订单号:{}, 总价:{}, 电脑端付款链接:{}'.format(order_id,total_money,pay_url)
-                )
+                '抢购成功，订单号:{}, 总价:{}, 电脑端付款链接:{}'.format(order_id, total_money, pay_url)
+            )
             if global_config.getRaw('messenger', 'enable') == 'true':
-                success_message = "抢购成功，订单号:{}, 总价:{}, 电脑端付款链接:{}".format(order_id, total_money, pay_url)
+                success_message = "抢购成功，订单号:{}, 总价:{}, 电脑端付款链接:{}".format(order_id, total_money,
+                                                                                          pay_url)
                 send_wechat(success_message)
             return True
         else:
